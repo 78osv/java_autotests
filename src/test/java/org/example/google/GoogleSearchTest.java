@@ -30,10 +30,16 @@ public class GoogleSearchTest {
         WebElement searchField = driver.findElement(By.name("q"));
         searchField.sendKeys(searchTerm, Keys.ENTER);
         // searchField.submit();
-        List<WebElement> results = driver.findElements(By.xpath("//*[@id='rso']//a"));
 
-        for (WebElement webElement : results) {
-            System.out.println(webElement.getText() + webElement.getAttribute("href").contains("mvideo.ru"));
+        // В поисковой выдаче всего 7 страниц
+        for (int i = 1; i < 7; i++) {
+            List<WebElement> results = driver.findElements(By.xpath(" //*[@id='rso']//h3/ancestor::a"));
+            for (WebElement webElement : results) {
+                if (webElement.getAttribute("href").contains("mvideo.ru")) {
+                    System.out.println(webElement.getAttribute("href"));
+                }
+            }
+            driver.findElement(By.xpath("//span[text()='Следующая']")).click();
         }
     }
 
